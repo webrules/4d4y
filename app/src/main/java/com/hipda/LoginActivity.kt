@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hipda.R
 import okhttp3.*
 import java.io.IOException
+import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var loginProgressBar: ProgressBar
     private val client = OkHttpClient()
+    private var formHash: String = "58734250"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +38,20 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun extractFormHash(html: String){
+        val pattern = Pattern.compile("name=\"formhash\" value=\"([^\"]*)\"")
+        val matcher = pattern.matcher(html)
+        if (matcher.find()) {
+            formHash = matcher.group(1)
+        }
+    }
+
     private fun login() {
         val username = usernameEditText.text.toString()
         val password = passwordEditText.text.toString() //  In a real app, hash the password securely!
 
         val formBody = FormBody.Builder()
-            .add("formhash", "b255b915") //  Get the correct formhash dynamically
+            .add("formhash", formHash)
             .add("referer", "https://www.4d4y.com/forum/")
             .add("loginfield", "username")
             .add("username", username)

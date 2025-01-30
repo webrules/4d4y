@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -20,24 +22,31 @@ import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
+import java.net.URLEncoder
 import java.util.regex.Pattern
 
 class ThreadActivity : AppCompatActivity() {
 
     private lateinit var container: LinearLayout
     private lateinit var threadProgressBar: ProgressBar
+    private lateinit var replyEditText: EditText
+    private lateinit var replyButton: Button
     private var threadId: String? = null
     private lateinit var toolbar: Toolbar
     private val client = OkHttpClient()
     private var currentPage = 1
     private var hasNextPage = false
-    private var myCookie: String? = null
+    private var myCookie: String = ""
+    private var formHash: String? = "58734250"
+    private var fid: String? = "2"
 
-    // Data classes for structured post information
     private data class Post(
         val author: String,
         val content: String,
@@ -50,6 +59,8 @@ class ThreadActivity : AppCompatActivity() {
 
         container = findViewById(R.id.container)
         threadProgressBar = findViewById(R.id.threadProgressBar)
+        replyEditText = findViewById(R.id.replyEditText)
+        replyButton = findViewById(R.id.replyButton)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -59,10 +70,10 @@ class ThreadActivity : AppCompatActivity() {
         val threadTitle = intent.getStringExtra("title")
         supportActionBar?.title = threadTitle
 
-        // Retrieve saved cookie
         myCookie = getSharedPreferences("AppPreferences", MODE_PRIVATE)
-            .getString("COOKIE", null)
-        if (myCookie.isNullOrEmpty()) {
+            .getString("COOKIE", null) ?: ""
+
+        if (myCookie.length < 50) {
             redirectToLogin()
         } else {
             currentPage = 1
@@ -78,6 +89,10 @@ class ThreadActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        replyButton.setOnClickListener {
+            postReply()
         }
     }
 
@@ -115,7 +130,6 @@ class ThreadActivity : AppCompatActivity() {
             .url(urlToFetch)
             .addHeader("cookie", myCookie ?: "")
             .addHeader("referer", "https://www.4d4y.com/forum/")
-            .addHeader("upgrade-insecure-requests", "1")
             .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0")
             .build()
 
@@ -131,7 +145,16 @@ class ThreadActivity : AppCompatActivity() {
                 runOnUiThread { threadProgressBar.visibility = View.GONE }
                 if (response.isSuccessful) {
                     val content = response.body?.string()
-                    if (content != null) {
+                    if (content == null || content.contains("您还未登录")) {
+                        redirectToLogin()
+                    } else {
+                        extractFormHash(content)
+//                        fid = extractFid(content)
+
+                        // Update the cookie if a new one is received
+                        val updatedCookies = response.headers("Set-Cookie").joinToString("; ") { it.substringBefore(";") }
+                        myCookie = mergeCookies(updatedCookies)
+
                         val posts = extractPosts(content)
                         runOnUiThread {
                             formatPosts(posts)
@@ -144,6 +167,37 @@ class ThreadActivity : AppCompatActivity() {
         })
     }
 
+    private fun extractFormHash(html: String){
+        val pattern = Pattern.compile("name=\"formhash\" value=\"([^\"]*)\"")
+        val matcher = pattern.matcher(html)
+        if (matcher.find()) {
+            formHash = matcher.group(1)
+        }
+    }
+
+//    private fun extractFid(content: String): String? {
+//        val pattern = Pattern.compile("name=\"fid\" value=\"(\\d+)\"")
+//        val matcher = pattern.matcher(content)
+//        return if (matcher.find()) matcher.group(1) else null
+//    }
+fun mergeCookies(updatedCookie: String): String {
+    // Step 1: Parse the existing cookies into a Map
+    val cookieMap = myCookie.split("; ")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+        .associate {
+            val (key, value) = it.split("=", limit = 2)
+            key to it // Store the full cookie string as the value
+        }.toMutableMap()
+
+    // Step 2: Parse the updated cookie
+    val updatedCookieName = updatedCookie.substringBefore("=")
+    cookieMap[updatedCookieName] = updatedCookie // Replace or add the updated cookie
+
+    // Step 3: Reconstruct the final cookie string
+    return cookieMap.values.joinToString("; ")
+}
+
     private fun extractPosts(html: String): List<Post> {
         val pattern = Pattern.compile("(?s)<td class=\"postauthor\".*?<div class=\"postinfo\">.*?<a[^>]*?>(.*?)</a>.*?</div>.*?<td class=\"t_msgfont\" id=\"postmessage_(\\d+)\">(.*?)</td>")
         val matcher = pattern.matcher(html)
@@ -153,20 +207,16 @@ class ThreadActivity : AppCompatActivity() {
             val author = matcher.group(1)
             var content = matcher.group(3)
 
-            // Remove <div class="t_attach"> sections
             val tAttachRegex = Regex("<div class=\"t_attach\".*?</div>", RegexOption.DOT_MATCHES_ALL)
             content = tAttachRegex.replace(content, "")
 
-            // Extract image URLs
             val imageRegex = "<img.*?src=\"(.*?)\".*?>".toRegex()
             val imageUrls = imageRegex.findAll(content)
                 .map { it.groupValues[1] }
                 .filterNot { url -> url.contains("default/attachimg.gif") || url.contains("smilies/") || url.contains("common/back.gif") }
                 .toList()
 
-            // Remove image tags from content
             val modifiedContent = imageRegex.replace(content, "")
-
             posts.add(Post(author, modifiedContent, imageUrls))
         }
         return posts
@@ -174,7 +224,6 @@ class ThreadActivity : AppCompatActivity() {
 
     private fun formatPosts(posts: List<Post>) {
         posts.forEach { post ->
-            // Add author
             val authorView = TextView(this).apply {
                 text = post.author
                 setTypeface(null, Typeface.BOLD)
@@ -183,7 +232,6 @@ class ThreadActivity : AppCompatActivity() {
             }
             container.addView(authorView)
 
-            // Add content
             val contentView = TextView(this).apply {
                 text = HtmlCompat.fromHtml(post.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 textSize = 18f
@@ -191,7 +239,6 @@ class ThreadActivity : AppCompatActivity() {
             }
             container.addView(contentView)
 
-            // Add images
             post.images.forEach { imageUrl ->
                 val imageView = ImageView(this).apply {
                     adjustViewBounds = true
@@ -212,5 +259,53 @@ class ThreadActivity : AppCompatActivity() {
         Glide.with(this)
             .load(imageUrl)
             .into(imageView)
+    }
+
+    private fun postReply() {
+        val message = replyEditText.text.toString().trim()
+        if (message.isEmpty()) {
+            Toast.makeText(this, "Reply cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val client = OkHttpClient()
+
+        val requestBody = "formhash=$formHash&subject=&usesig=0&message=".plus(URLEncoder.encode(message,"GBK"))
+            .toRequestBody("application/x-www-form-urlencoded".toMediaTypeOrNull())
+
+        val request = Request.Builder()
+            .url("https://www.4d4y.com/forum/post.php?action=reply&fid=2&tid=" +
+                    this.threadId + "&extra=page%3D" + this.currentPage +
+                    "&replysubmit=yes&infloat=yes&handlekey=fastpost&inajax=1")
+            .post(requestBody)
+            .addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+            .addHeader("accept-language", "en-US,en;q=0.9,zh-CN;q=0.8,zh-TW;q=0.7,zh;q=0.6")
+            .addHeader("cookie", myCookie ?: "")
+            .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@ThreadActivity, "Failed to post reply: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    runOnUiThread {
+                        replyEditText.setText("")
+                        Toast.makeText(this@ThreadActivity, "Reply posted successfully", Toast.LENGTH_SHORT).show()
+                        container.removeAllViews()
+//                        currentPage = 1
+                        loadPage(currentPage)
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@ThreadActivity, "Failed to post reply: ${response.code}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 }

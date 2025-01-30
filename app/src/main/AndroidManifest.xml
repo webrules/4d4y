@@ -17,9 +17,11 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.Light"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".ThreadActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false"
             android:label="@string/title_activity_thread"
             android:theme="@style/AppTheme.NoActionBar">
@@ -27,6 +29,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
