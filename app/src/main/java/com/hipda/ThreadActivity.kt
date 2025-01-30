@@ -1,13 +1,14 @@
 package com.hipda
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Html
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -22,7 +23,6 @@ import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.FormBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -114,29 +114,39 @@ class ThreadActivity : AppCompatActivity() {
                 loadPage(currentPage)
                 true
             }
+
             android.R.id.home -> {
                 finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun loadPage(page: Int) {
         threadProgressBar.visibility = View.VISIBLE
-        val urlToFetch = "https://www.4d4y.com/forum/viewthread.php?tid=$threadId&extra=page%3D1&page=$page"
+        val urlToFetch =
+            "https://www.4d4y.com/forum/viewthread.php?tid=$threadId&extra=page%3D1&page=$page"
 
         val request = Request.Builder()
             .url(urlToFetch)
             .addHeader("cookie", myCookie ?: "")
             .addHeader("referer", "https://www.4d4y.com/forum/")
-            .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0")
+            .addHeader(
+                "user-agent",
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0"
+            )
             .build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    Toast.makeText(this@ThreadActivity, "Network Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ThreadActivity,
+                        "Network Error: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     threadProgressBar.visibility = View.GONE
                 }
             }
@@ -152,7 +162,8 @@ class ThreadActivity : AppCompatActivity() {
 //                        fid = extractFid(content)
 
                         // Update the cookie if a new one is received
-                        val updatedCookies = response.headers("Set-Cookie").joinToString("; ") { it.substringBefore(";") }
+                        val updatedCookies = response.headers("Set-Cookie")
+                            .joinToString("; ") { it.substringBefore(";") }
                         myCookie = mergeCookies(updatedCookies)
 
                         val posts = extractPosts(content)
@@ -167,7 +178,7 @@ class ThreadActivity : AppCompatActivity() {
         })
     }
 
-    private fun extractFormHash(html: String){
+    private fun extractFormHash(html: String) {
         val pattern = Pattern.compile("name=\"formhash\" value=\"([^\"]*)\"")
         val matcher = pattern.matcher(html)
         if (matcher.find()) {
@@ -175,31 +186,32 @@ class ThreadActivity : AppCompatActivity() {
         }
     }
 
-//    private fun extractFid(content: String): String? {
+    //    private fun extractFid(content: String): String? {
 //        val pattern = Pattern.compile("name=\"fid\" value=\"(\\d+)\"")
 //        val matcher = pattern.matcher(content)
 //        return if (matcher.find()) matcher.group(1) else null
 //    }
-fun mergeCookies(updatedCookie: String): String {
-    // Step 1: Parse the existing cookies into a Map
-    val cookieMap = myCookie.split("; ")
-        .map { it.trim() }
-        .filter { it.isNotEmpty() }
-        .associate {
-            val (key, value) = it.split("=", limit = 2)
-            key to it // Store the full cookie string as the value
-        }.toMutableMap()
+    fun mergeCookies(updatedCookie: String): String {
+        // Step 1: Parse the existing cookies into a Map
+        val cookieMap = myCookie.split("; ")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .associate {
+                val (key, value) = it.split("=", limit = 2)
+                key to it // Store the full cookie string as the value
+            }.toMutableMap()
 
-    // Step 2: Parse the updated cookie
-    val updatedCookieName = updatedCookie.substringBefore("=")
-    cookieMap[updatedCookieName] = updatedCookie // Replace or add the updated cookie
+        // Step 2: Parse the updated cookie
+        val updatedCookieName = updatedCookie.substringBefore("=")
+        cookieMap[updatedCookieName] = updatedCookie // Replace or add the updated cookie
 
-    // Step 3: Reconstruct the final cookie string
-    return cookieMap.values.joinToString("; ")
-}
+        // Step 3: Reconstruct the final cookie string
+        return cookieMap.values.joinToString("; ")
+    }
 
     private fun extractPosts(html: String): List<Post> {
-        val pattern = Pattern.compile("(?s)<td class=\"postauthor\".*?<div class=\"postinfo\">.*?<a[^>]*?>(.*?)</a>.*?</div>.*?<td class=\"t_msgfont\" id=\"postmessage_(\\d+)\">(.*?)</td>")
+        val pattern =
+            Pattern.compile("(?s)<td class=\"postauthor\".*?<div class=\"postinfo\">.*?<a[^>]*?>(.*?)</a>.*?</div>.*?<td class=\"t_msgfont\" id=\"postmessage_(\\d+)\">(.*?)</td>")
         val matcher = pattern.matcher(html)
         val posts = mutableListOf<Post>()
 
@@ -207,13 +219,18 @@ fun mergeCookies(updatedCookie: String): String {
             val author = matcher.group(1)
             var content = matcher.group(3)
 
-            val tAttachRegex = Regex("<div class=\"t_attach\".*?</div>", RegexOption.DOT_MATCHES_ALL)
+            val tAttachRegex =
+                Regex("<div class=\"t_attach\".*?</div>", RegexOption.DOT_MATCHES_ALL)
             content = tAttachRegex.replace(content, "")
 
             val imageRegex = "<img.*?src=\"(.*?)\".*?>".toRegex()
             val imageUrls = imageRegex.findAll(content)
                 .map { it.groupValues[1] }
-                .filterNot { url -> url.contains("default/attachimg.gif") || url.contains("smilies/") || url.contains("common/back.gif") }
+                .filterNot { url ->
+                    url.contains("default/attachimg.gif") || url.contains("smilies/") || url.contains(
+                        "common/back.gif"
+                    )
+                }
                 .toList()
 
             val modifiedContent = imageRegex.replace(content, "")
@@ -261,6 +278,19 @@ fun mergeCookies(updatedCookie: String): String {
             .into(imageView)
     }
 
+    @SuppressLint("ServiceCast")
+    private fun hideKeyboard() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        // Find the currently focused view
+        val view = currentFocus
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+            // Clear focus to prevent the keyboard from reopening
+            view.clearFocus()
+        }
+    }
+
+
     private fun postReply() {
         val message = replyEditText.text.toString().trim()
         if (message.isEmpty()) {
@@ -270,24 +300,37 @@ fun mergeCookies(updatedCookie: String): String {
 
         val client = OkHttpClient()
 
-        val requestBody = "formhash=$formHash&subject=&usesig=0&message=".plus(URLEncoder.encode(message,"GBK"))
-            .toRequestBody("application/x-www-form-urlencoded".toMediaTypeOrNull())
+        val requestBody =
+            "formhash=$formHash&subject=&usesig=0&message=".plus(URLEncoder.encode(message, "GBK"))
+                .toRequestBody("application/x-www-form-urlencoded".toMediaTypeOrNull())
 
         val request = Request.Builder()
-            .url("https://www.4d4y.com/forum/post.php?action=reply&fid=2&tid=" +
-                    this.threadId + "&extra=page%3D" + this.currentPage +
-                    "&replysubmit=yes&infloat=yes&handlekey=fastpost&inajax=1")
+            .url(
+                "https://www.4d4y.com/forum/post.php?action=reply&fid=2&tid=" +
+                        this.threadId + "&extra=page%3D" + this.currentPage +
+                        "&replysubmit=yes&infloat=yes&handlekey=fastpost&inajax=1"
+            )
             .post(requestBody)
-            .addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+            .addHeader(
+                "accept",
+                "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+            )
             .addHeader("accept-language", "en-US,en;q=0.9,zh-CN;q=0.8,zh-TW;q=0.7,zh;q=0.6")
             .addHeader("cookie", myCookie ?: "")
-            .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0")
+            .addHeader(
+                "user-agent",
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0"
+            )
             .build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    Toast.makeText(this@ThreadActivity, "Failed to post reply: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ThreadActivity,
+                        "Failed to post reply: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -295,14 +338,23 @@ fun mergeCookies(updatedCookie: String): String {
                 if (response.isSuccessful) {
                     runOnUiThread {
                         replyEditText.setText("")
-                        Toast.makeText(this@ThreadActivity, "Reply posted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@ThreadActivity,
+                            "Reply posted successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        hideKeyboard()
                         container.removeAllViews()
 //                        currentPage = 1
                         loadPage(currentPage)
                     }
                 } else {
                     runOnUiThread {
-                        Toast.makeText(this@ThreadActivity, "Failed to post reply: ${response.code}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@ThreadActivity,
+                            "Failed to post reply: ${response.code}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

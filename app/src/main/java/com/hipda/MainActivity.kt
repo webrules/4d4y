@@ -1,5 +1,7 @@
 package com.hipda
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -11,6 +13,7 @@ import android.text.style.ClickableSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -96,6 +99,18 @@ class MainActivity : AppCompatActivity() {
         finish() // Close MainActivity to prevent going back without logging in
     }
 
+    @SuppressLint("ServiceCast")
+    private fun hideKeyboard() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        // Find the currently focused view
+        val view = currentFocus
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+            // Clear focus to prevent the keyboard from reopening
+            view.clearFocus()
+        }
+    }
+
     private fun submitNewThread(subject: String, body: String) {
         // Encode parameters using GBK
         val subjectEncoded = URLEncoder.encode(subject, "GBK")
@@ -155,6 +170,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this@MainActivity, "发帖成功!", Toast.LENGTH_SHORT).show()
                             editTextSubject.text.clear()
                             editTextBody.text.clear()
+                            hideKeyboard()
                             currentPage = 1
                             textViewContent.text = SpannableStringBuilder()
                             loadPage(currentPage)
