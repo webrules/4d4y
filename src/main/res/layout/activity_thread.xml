@@ -7,11 +7,20 @@
     tools:context=".ThreadActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="?attr/colorPrimary"
+        android:layout_marginTop="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_below="@id/toolbar1"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ScrollView
@@ -44,7 +53,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="@android:color/white"
+        android:background="?android:attr/colorBackground"
         android:elevation="4dp">
 
         <EditText
