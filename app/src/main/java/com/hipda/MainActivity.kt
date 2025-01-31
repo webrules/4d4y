@@ -2,7 +2,9 @@ package com.hipda
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
@@ -21,6 +23,8 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -46,13 +50,16 @@ class MainActivity : AppCompatActivity() {
     private var formHash: String = "58734250"
     private var currentPage = 1
     private var hasNextPage = false
+    private var textColor  = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setContentView(R.layout.activity_main)
         setTitle("来自D版带着爱")
 
         textViewContent = findViewById(R.id.textViewContent)
+        this.textColor = ContextCompat.getColor(this, R.color.textColor)
         progressBar = findViewById(R.id.progressBar)
         editTextSubject = findViewById(R.id.editTextSubject)
         editTextBody = findViewById(R.id.editTextBody)
@@ -319,8 +326,13 @@ class MainActivity : AppCompatActivity() {
 
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
-                    ds.color = Color.BLACK
                     ds.isUnderlineText = false // Adds an underline for visibility
+                    val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                    if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                        ds.color = textColor
+                    } else {
+                        ds.color = Color.BLACK
+                    }
                 }
             }
 

@@ -3,6 +3,8 @@ package com.hipda
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Menu
@@ -18,6 +20,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
@@ -34,8 +37,10 @@ import java.util.regex.Pattern
 
 class ThreadActivity : AppCompatActivity() {
 
+    private lateinit var scrollView: ScrollView
     private lateinit var container: LinearLayout
     private lateinit var threadProgressBar: ProgressBar
+    private lateinit var replyLayout: LinearLayout
     private lateinit var replyEditText: EditText
     private lateinit var replyButton: Button
     private var threadId: String? = null
@@ -46,6 +51,7 @@ class ThreadActivity : AppCompatActivity() {
     private var myCookie: String = ""
     private var formHash: String? = "58734250"
     private var fid: String? = "2"
+    private var isNightMode = false
 
     private data class Post(
         val author: String,
@@ -55,16 +61,39 @@ class ThreadActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_thread)
 
+        val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        isNightMode=(nightModeFlags == Configuration.UI_MODE_NIGHT_YES)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+//        val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+//        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//        }
+        setContentView(R.layout.activity_thread)
+        scrollView = findViewById(R.id.scrollView)
         container = findViewById(R.id.container)
         threadProgressBar = findViewById(R.id.threadProgressBar)
+        replyLayout= findViewById(R.id.replyLayout)
         replyEditText = findViewById(R.id.replyEditText)
         replyButton = findViewById(R.id.replyButton)
-
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if(isNightMode) {
+            scrollView.setBackgroundColor(Color.BLACK)
+            container.setBackgroundColor(Color.BLACK)
+            replyEditText.setBackgroundColor(Color.BLACK)
+            replyButton.setBackgroundColor(Color.BLACK)
+            replyLayout.setBackgroundColor(Color.BLACK)
+            toolbar.setBackgroundColor(Color.BLACK)
+            replyEditText.setTextColor(Color.WHITE)
+            replyButton.setTextColor(Color.WHITE)
+            toolbar.setTitleTextColor(Color.WHITE)
+        }
 
         threadId = intent.getStringExtra("tid")
         val threadTitle = intent.getStringExtra("title")
@@ -240,6 +269,7 @@ class ThreadActivity : AppCompatActivity() {
     }
 
     private fun formatPosts(posts: List<Post>) {
+
         posts.forEach { post ->
             val authorView = TextView(this).apply {
                 text = post.author
@@ -247,12 +277,20 @@ class ThreadActivity : AppCompatActivity() {
                 textSize = 18f
                 setPadding(0, 16, 0, 8)
             }
+            if (isNightMode) {
+                authorView.setTextColor(Color.WHITE)
+                authorView.setBackgroundColor(Color.BLACK)
+            }
             container.addView(authorView)
 
             val contentView = TextView(this).apply {
                 text = HtmlCompat.fromHtml(post.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 textSize = 18f
                 setPadding(0, 8, 0, 16)
+            }
+            if (isNightMode) {
+                contentView.setTextColor(Color.WHITE)
+                contentView.setBackgroundColor(Color.BLACK)
             }
             container.addView(contentView)
 

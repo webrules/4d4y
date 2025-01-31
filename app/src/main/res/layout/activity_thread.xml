@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ThreadActivity">
+    tools:context=".ThreadActivity"
+    android:background="?android:attr/windowBackground">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ScrollView
@@ -44,7 +45,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="@android:color/white"
+        android:background="?android:attr/colorBackground"
         android:elevation="4dp">
 
         <EditText
