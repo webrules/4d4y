@@ -44,6 +44,7 @@ class ThreadActivity : AppCompatActivity() {
     private lateinit var replyEditText: EditText
     private lateinit var replyButton: Button
     private var threadId: String? = null
+    private lateinit var toolbar1: Toolbar
     private lateinit var toolbar: Toolbar
     private val client = OkHttpClient()
     private var currentPage = 1
@@ -79,6 +80,7 @@ class ThreadActivity : AppCompatActivity() {
         replyLayout= findViewById(R.id.replyLayout)
         replyEditText = findViewById(R.id.replyEditText)
         replyButton = findViewById(R.id.replyButton)
+        toolbar1 = findViewById(R.id.toolbar1)
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -89,6 +91,7 @@ class ThreadActivity : AppCompatActivity() {
             replyEditText.setBackgroundColor(Color.BLACK)
             replyButton.setBackgroundColor(Color.BLACK)
             replyLayout.setBackgroundColor(Color.BLACK)
+            toolbar1.setBackgroundColor(Color.BLACK)
             toolbar.setBackgroundColor(Color.BLACK)
             replyEditText.setTextColor(Color.WHITE)
             replyButton.setTextColor(Color.WHITE)

@@ -25,6 +25,7 @@
     </style>
 
     <style name="AppTheme.NoActionBar.Dark" parent="AppTheme.NoActionBar">
+        <item name="android:statusBarColor">#121212</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">#FFFFFF</item>

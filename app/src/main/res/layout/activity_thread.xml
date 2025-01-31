@@ -4,15 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ThreadActivity"
-    android:background="?android:attr/windowBackground">
+    tools:context=".ThreadActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar1"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="?attr/colorPrimary"
+        android:layout_marginTop="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_below="@id/toolbar1"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ScrollView
@@ -27,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"/>
+            android:padding="0dp"/>
     </ScrollView>
 
     <ProgressBar
