@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HiPDA!</string>
+    <string name="title_activity_thread">ThreadActivity</string>
+</resources>
