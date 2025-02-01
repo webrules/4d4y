@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".NewActivity">
+
+    <TextView
+        android:id="@+id/lblSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请在下方录入话题"
+        android:textSize="12sp"
+        android:padding="3dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginTop="40dp"/>
+    <EditText
+        android:id="@+id/editTextSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblSubject"
+        android:hint="话题"
+        android:inputType="text"
+        android:padding="3dp"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/lblBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="请在下方文本框里录入正文内容，点击左下角的照相机选择图片上传。图片将依次显示在正文结尾。系统暂时不支持调整图片顺序。"
+        android:textSize="12sp"
+        android:padding="3dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_below="@id/editTextSubject"
+        android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/editTextBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="正文"
+        android:inputType="textMultiLine"
+        android:gravity="top"
+        android:padding="3dp"
+        android:minLines="10"
+        android:maxLines="10"
+        android:layout_below="@id/lblBody"
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Camera Button -->
+        <ImageButton
+            android:id="@+id/buttonCamera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_camera"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="添加图片"/>
+
+        <!-- Spacer -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表新话题"
+            android:drawableEnd="@android:drawable/ic_menu_send"
+            android:drawablePadding="8dp"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+</LinearLayout>

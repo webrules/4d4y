@@ -14,30 +14,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight"
         tools:targetApi="31">
-    <activity
-        android:name=".LoginActivity"
-        android:theme="@style/Theme.AppCompat.DayNight"
-        android:windowSoftInputMode="adjustResize"
-        android:exported="true" />
-    <activity
-        android:name=".ThreadActivity"
-        android:windowSoftInputMode="adjustPan"
-        android:exported="false"
-        android:label="@string/title_activity_thread"
-        android:theme="@style/AppTheme.NoActionBar">
-    </activity>
-    <activity
-        android:name=".MainActivity"
-        android:windowSoftInputMode="adjustPan"
-        android:exported="true"
-        android:theme="@style/Theme.AppCompat.DayNight">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-</application>
-
-
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight"
+            android:windowSoftInputMode="adjustPan">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".ThreadActivity"
+            android:exported="false"
+            android:label="@string/title_activity_thread"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".NewActivity"
+            android:exported="false"
+            android:label="NewActivity"
+            android:theme="@style/Theme.AppCompat.DayNight"
+            android:windowSoftInputMode="adjustResize" />
+    </application>
 
 </manifest>

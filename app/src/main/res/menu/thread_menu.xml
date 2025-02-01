@@ -1,10 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--<item
-        android:id="@+id/newThread"
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/newTopic"
         android:icon="@drawable/ic_add"
         android:title="Add"
-        app:showAsAction="ifRoom" />-->
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/refresh"
         android:icon="@drawable/ic_refresh"

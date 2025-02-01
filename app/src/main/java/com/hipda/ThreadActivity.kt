@@ -147,14 +147,19 @@ class ThreadActivity : AppCompatActivity() {
                 true
             }
 
-            android.R.id.home -> {
-                finish()
+            R.id.newTopic -> {
+                startActivity(Intent(this, NewActivity::class.java))
+                true
+            }
+            R.id.home -> {
+                startActivity(Intent(this, MainActivity::class.java))
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     private fun loadPage(page: Int) {
         threadProgressBar.visibility = View.VISIBLE
