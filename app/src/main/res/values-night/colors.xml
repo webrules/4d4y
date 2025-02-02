@@ -1,0 +1,5 @@
+<!-- res/values-night/colors.xml -->
+<resources>
+    <color name="icon_color">#FFFFFF</color> <!-- Dark mode icon color -->
+    <color name="surface_color">#121212</color> <!-- Dark background -->
+</resources>

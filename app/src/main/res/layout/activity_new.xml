@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="请在下方文本框里录入正文内容，点击左下角的照相机选择图片上传。图片将依次显示在正文结尾。系统暂时不支持调整图片顺序。文件尺寸: 小于 8MB 上传限制: 100 个文件 800MB 可用扩展名: jpg, jpeg, gif, png, bmp。"
+        android:text="请在下方文本框里录入正文内容，点击左下角的照相机选择图片上传。图片将依次显示在正文结尾。系统暂时不支持调整图片顺序。"
         android:textSize="12sp"
         android:padding="3dp"
         android:textColor="?android:attr/textColorPrimary"
@@ -86,8 +86,8 @@
         android:id="@+id/tvSizeInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="已选0/8张，总大小0MB/100MB"
-        android:textColor="@color/black"
+        android:text="已选0/100张，总大小0MB/800MB。文件尺寸: 小于 8MB。可用扩展名: jpg, jpeg, gif, png, bmp。"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_below="@id/buttonLayout"
         android:layout_marginTop="8dp"/>
     <androidx.recyclerview.widget.RecyclerView

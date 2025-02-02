@@ -1,0 +1,568 @@
+Please help me implement this process in Kotlin for my Android app. It should be a standalone activity.
+1. Visit https://www.4d4y.com/forum/post.php?action=newthread&fid=62, and retrieve values 
+  formhash 58734250
+  posttime 1738398319
+  wysiwyg
+  iconid
+
+  from following HTML response: 
+
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+  <title>Joggler - Geek Talks · 奇客怪谈 -  4D4Y  </title>
+  <meta name="keywords" content="" />
+  <meta name="generator" content="Discuz! 7.2" />
+  <meta name="description" content=" 4D4Y  - Board" />
+  <meta name="MSSmartTagsPreventParsing" content="True" />
+  <meta http-equiv="MSThemeCompatible" content="Yes" />
+  <meta http-equiv="x-ua-compatible" content="ie=7" />
+  <link rel="archives" title="4D4Y" href="https://www.4d4y.com/forum/archiver/" />
+  <link rel="stylesheet" type="text/css" href="https://c.4d4y.com/forum/forumdata/cache/style_1_common.css?vnB" /><link rel="stylesheet" type="text/css" href="https://c.4d4y.com/forum/forumdata/cache/scriptstyle_1_post.css?vnB" />
+  <script type="text/javascript">var STYLEID = '1', IMGDIR = 'images/default', VERHASH = 'vnB', charset = 'gbk', discuz_uid = 576177, cookiedomain = '', cookiepath = '/', attackevasive = '0', disallowfloat = 'login|register|sendpm|newthread|reply|viewratings|viewwarning|viewthreadmod|viewvote|tradeorder|activity|debate|nav|usergroups|task', creditnotice = ',', gid = 0, fid = parseInt('62'), tid = parseInt('0')</script>
+  <script src="https://c.4d4y.com/forum/forumdata/cache/common.js?vnB" type="text/javascript"></script>
+  </head>
+  
+  <body id="post" onkeydown="if(event.keyCode==27) return false;">
+  
+  <div id="append_parent"></div><div id="ajaxwaitid"></div>
+  
+  <div id="header">
+  <div class="wrap s_clear">
+  <h2><a href="index.php" title="4D4Y"><img src="templates/default/images/logo.gif" alt="4D4Y" border="0" /></a></h2>
+  <div id="umenu">
+  <cite><a href="space.php?uid=576177" class="noborder">Webrules</a></cite>
+  <span class="pipe">|</span>
+  <a id="myprompt" href="notice.php" >提醒</a>
+  <span id="myprompt_check"></span>
+  <a href="pm.php" id="pm_ntc" target="_blank">短消息</a>
+  
+  <span class="pipe">|</span>
+  <a href="memcp.php">个人中心</a>
+  <a href="logging.php?action=logout&amp;formhash=58734250">退出</a>
+  </div>
+  <div id="ad_headerbanner"></div>
+  <div id="menu">
+  <ul>
+  <li class="menu_1"><a href="index.php" hidefocus="true" id="mn_index">论坛</a></li><li class="menu_2"><a href="search.php" hidefocus="true" id="mn_search">搜索</a></li></ul>
+  <script type="text/javascript">
+  var currentMenu = $('mn_') ? $('mn_') : $('mn_index');
+  currentMenu.parentNode.className = 'current';
+  </script>
+  </div>
+  </div>
+  <div id="myprompt_menu" style="display:none" class="promptmenu">
+  <div class="promptcontent">
+  <ul class="s_clear"><li style="display:none"><a id="prompt_pm" href="pm.php?filter=newpm" target="_blank">私人消息 (0)</a></li><li style="display:none"><a id="prompt_announcepm" href="pm.php?filter=announcepm" target="_blank">公共消息 (0)</a></li><li style="display:none"><a id="prompt_systempm" href="notice.php?filter=systempm" target="_blank">系统消息 (0)</a></li><li style="display:none"><a id="prompt_friend" href="notice.php?filter=friend" target="_blank">好友消息 (0)</a></li><li style="display:none"><a id="prompt_threads" href="notice.php?filter=threads" target="_blank">帖子消息 (0)</a></li></ul>
+  </div>
+  </div>
+  </div>
+  
+  <div id="nav"><a href="index.php">4D4Y</a> &raquo; <a href="forumdisplay.php?fid=7">Geek Talks · 奇客怪谈</a> &raquo; <a href="forumdisplay.php?fid=62">Joggler</a>  &raquo; 发新话题</div><div id="wrap" class="wrap s_clear"><div class="main"><div class="content editorcontent">
+  <form method="post" id="postform"
+  action="post.php?action=newthread&amp;fid=62&amp;extra=&amp;topicsubmit=yes"
+  onsubmit="return validate(this)">
+  <input type="hidden" name="formhash" id="formhash" value="58734250" />
+  <input type="hidden" name="posttime" id="posttime" value="1738398319" />
+  <input type="hidden" name="wysiwyg" id="e_mode" value="1" />
+  <input type="hidden" name="iconid" id="iconid" value="" />
+  <div class="s_clear" id="editorbox">
+  <h3 class="float_ctrl">
+  <em id="returnmessage">
+  发新话题</em>
+  </h3>
+  <div class="postbox" id="postbox">
+  <div class="float_postinfo s_clear">
+  <em id="icon" class="dropmenu" onclick="showMenu({'ctrlid':this.id})"><img id="icon_img" src="images/icons/icon1.gif" /></em>
+  <ul id="icon_menu" class="popupmenu_popup" style="display:none"><li><a href="javascript:;"><img onclick="switchicon(10, this)" src="images/icons/icon1.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(18, this)" src="images/icons/icon9.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(17, this)" src="images/icons/icon8.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(16, this)" src="images/icons/icon7.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(15, this)" src="images/icons/icon6.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(14, this)" src="images/icons/icon5.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(13, this)" src="images/icons/icon4.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(12, this)" src="images/icons/icon3.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(11, this)" src="images/icons/icon2.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(85, this)" src="images/icons/icon10.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(86, this)" src="images/icons/icon11.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(87, this)" src="images/icons/icon12.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(88, this)" src="images/icons/icon13.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(89, this)" src="images/icons/icon14.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(90, this)" src="images/icons/icon15.gif" alt="" /></a></li><li><a href="javascript:;"><img onclick="switchicon(91, this)" src="images/icons/icon16.gif" alt="" /></a></li></ul>
+  <span><input name="subject" id="subject" prompt="post_subject"  class="txt" value="" tabindex="1" /></span>
+  <div class="left">
+  <div class="float_typeid">
+  <select name="typeid" id="typeid">
+  <option value="0">分类</option><option value="7">各类配件</option><option value="16">ROM</option><option value="17">硬件报告</option><option value="41">业界</option><option value="47">各类软件</option><option value="73">综合</option><option value="74">安卓</option><option value="75">交流</option><option value="18">求助</option><option value="19">站务</option></select>
+  </div>
+  </div>
+  </div>
+  <div id="e_controls" class="editorrow">
+  <div class="editor">
+  <a id="e_switcher" class="plugeditor editormode"><input type="checkbox" name="checkbox" value="0"  onclick="switchEditor(this.checked?0:1)" />源码</a>
+  <div class="editorbtn">
+  <div class="maxbtn">
+  <a id="e_cmd_paste" title="粘贴">粘贴</a>
+  </div>
+  <div class="minibtn">
+  <p>
+  <a id="e_cmd_simple" title="粗体">B</a>
+  <a id="e_cmd_fontname" title="字体">Font</a>
+  <a id="e_cmd_fontsize" title="大小">Size</a>
+  <a id="e_cmd_forecolor" title="颜色">Color</a>
+  <a id="e_cmd_createlink" title="插入链接">Url</a>
+  <em></em>
+  <a id="e_cmd_unlink" title="移除链接">Unlink</a>
+  <a id="e_cmd_removeformat" title="清除文本格式">Removeformat</a>
+  <a id="e_cmd_undo" title="撤销">Undo</a>
+  <a id="e_cmd_redo" title="重做">Redo</a>
+  </p>
+  <p>
+  <a id="e_cmd_paragraph" title="段落">P</a>
+  <a id="e_cmd_table" title="插入表格">Table</a>
+  <a id="e_cmd_list" title="插入列表">List</a>
+  <a id="e_cmd_hidden" title="插入隐藏内容" class="hidebtn_disabled">Hide</a>
+  <a id="e_cmd_free" title="插入免费信息">Free</a>
+  <em></em>
+  <a id="e_cmd_savedata" title="保存数据">Savedata</a>
+  <a id="e_cmd_loaddata" title="恢复数据">Loaddata</a>
+  <a id="e_cmd_clearcontent" title="清空内容">Clearcontent</a>
+  <a id="e_cmd_checklength" title="字数检查">Checklength</a>
+  </p>
+  </div>
+  <div class="maxbtn">
+  <a id="e_cmd_smilies" title="表情">表情</a>
+  <div id="e_cmd_image_notice" class="haspic" style="display:none">!</div>
+  <a id="e_cmd_image" title="图片">图片</a>
+  <div id="e_cmd_attach_notice" class="hasatt" style="display:none">!</div>
+  <a id="e_cmd_attach" title="附件">附件</a>
+  <a id="e_cmd_code" title="代码">代码</a>
+  <a id="e_cmd_quote" title="引用">引用</a>
+  </div>
+  <div class="minibtn">
+  <p><a id="e_cmd_custom1_wmv" class="customedit" title="Embed Windows media file in thread page"><img src="https://c.4d4y.com/forum/images/common/bb_wmv.gif"title="Embed Windows media file in thread page" alt="wmv" /></a><a id="e_cmd_custom1_qq" class="customedit" title="Show online status of specified QQ UIN and chat with him/her simply by clicking the icon"><img src="https://c.4d4y.com/forum/images/common/bb_qq.gif"title="Show online status of specified QQ UIN and chat with him/her simply by clicking the icon" alt="qq" /></a></p>
+  <p><a id="e_cmd_custom1_rm" class="customedit" title="Embed Real Movie in thread page"><img src="https://c.4d4y.com/forum/images/common/bb_rm.gif"title="Embed Real Movie in thread page" alt="rm" /></a></p>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  <div class="newediter">
+  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="table-layout:fixed">
+  <tr><td><textarea class="autosave" name="message" id="e_textarea" prompt="post_message"  tabindex="1" class="txt" style="height:300px"></textarea></td></tr>
+  </table>
+  </div>
+  
+  <script src="https://c.4d4y.com/forum/forumdata/cache/post.js?vnB" type="text/javascript"></script>
+  <script src="https://c.4d4y.com/forum/forumdata/cache/bbcode.js?vnB" type="text/javascript"></script>
+  <script type="text/javascript">
+  
+  var editorid = 'e';
+  var textobj = $(editorid + '_textarea');
+  var wysiwyg = (BROWSER.ie || BROWSER.firefox || (BROWSER.opera >= 9)) && parseInt('1') == 1 ? 1 : 0;
+  var allowswitcheditor = parseInt('1');
+  var allowhtml = parseInt('0');
+  var forumallowhtml = parseInt('0');
+  var allowsmilies = parseInt('1');
+  var allowbbcode = parseInt('1');
+  var allowimgcode = parseInt('1');
+  var allowpostattach = parseInt('1');
+  var allowpostimg = parseInt('1');
+  var editorcss = 'forumdata/cache/style_1_wysiwyg.css?vnB';
+  var TABLEBG = '#fefefe';
+  var pid = parseInt('');
+  var extensions = '';
+  var imgexts = 'jpg, jpeg, gif, png, bmp';
+  var fontoptions = new Array("仿宋_GB2312", "黑体", "楷体_GB2312", "宋体", "新宋体", "微软雅黑", "Trebuchet MS", "Tahoma", "Arial", "Impact", "Verdana", "Times New Roman");
+  var custombbcodes = new Array();
+  custombbcodes["wmv"] = {'prompt' : '请输入 Windows media 音频或视频的 URL:'};custombbcodes["rm"] = {'prompt' : '请输入 Real 音频或视频的 URL:'};custombbcodes["qq"] = {'prompt' : '请输入显示在线状态 QQ 号码:'};</script><div class="columntype">
+  <table cellpadding="0" cellspacing="0"><tr>
+  <td class="firstlist posttags">
+  <p><strong>标签(TAG):</strong> (用逗号或空格隔开多个标签，最多可填写 <strong>5</strong> 个)</p>
+  <p><input type="text" name="tags" id="tags" class="txt" value="" tabindex="1" /><button name="addtags" type="button" onclick="relatekw();return false">+可用标签</button> <span id="tagselect"></span></p>
+  </div>
+  </td>
+  </tr></table>
+  </div>
+  <div class="columntype">
+  <h4>发帖选项:</h4>
+  <table cellpadding="0" cellspacing="0" border="0">
+  <tr>
+  <td class="firstlist">
+  <p><input type="checkbox" name="htmlon" id="htmlon" value="0"  disabled="disabled" /><label for="htmlon">Html 代码</label></p>
+  <p><input type="checkbox" id="allowimgcode" disabled checked="checked" /><label for="allowimgcode">[img] 代码</label></p>
+  </td>
+  <td>
+  <p><input type="checkbox" name="parseurloff" id="parseurloff" value="1"  tabindex="1" /><label for="parseurloff">禁用 URL 识别</label></p>
+  <p><input type="checkbox" name="smileyoff" id="smileyoff" value="1"  tabindex="1" /><label for="smileyoff">禁用 <a href="faq.php?action=faq&amp;id=5&amp;messageid=32" target="_blank">Smilies</a></label></p>
+  <p><input type="checkbox" name="bbcodeoff" id="bbcodeoff" value="1"  tabindex="1" /><label for="bbcodeoff">禁用 <a href="faq.php?action=faq&amp;id=5&amp;messageid=18" target="_blank">Discuz!代码</a></label></p>
+  <p><input type="checkbox" name="tagoff" id="tagoff"  tabindex="1" /><label for="tagoff">禁用 标签解析</label></p>
+  </td>
+  <td>
+  <p><input type="checkbox" name="ordertype" id="ordertype" value="1"  tabindex="1" /><label for="ordertype">倒序看帖</label></p>
+  <p><input type="checkbox" name="attention_add" id="attention_add" checked="checked" value="1" /><label for="attention_add">关注此主题的新回复</label></p>
+  <p><input type="checkbox" name="usesig" id="usesig" value="1"  tabindex="1" /><label for="usesig">使用个人签名</label></p>
+  </td>
+  <td>
+  <!--	<p><input type="checkbox" name="hiddenreplies" id="hiddenreplies" value="1"><label for="hiddenreplies">回帖仅作者可见</label></p>-->
+  </td>
+  </tr>
+  </table><br />
+  </div>
+  <div class="btnbar">
+  <span>
+  </span>
+  <button type="submit" id="postsubmit" prompt="post_submit"  value="true" name="topicsubmit" tabindex="1">
+  发新话题
+  </button>
+  </div>
+  </div>
+  </div>
+  </form>
+  
+  </div></div></div>
+  
+  <div id="e_menus" class="editorrow" style="overflow: hidden; margin-top: -5px; height: 0; border: none; background: transparent;"><div class="editortoolbar">
+  <div class="popupmenu_popup simple_menu" id="e_cmd_simple_menu" style="display: none">
+  <ul unselectable="on">
+  <li id="e_cmd_bold" onclick="discuzcode('bold')" unselectable="on">粗体</li>
+  <li id="e_cmd_italic" onclick="discuzcode('italic')" unselectable="on">斜体</li>
+  <li id="e_cmd_underline" onclick="discuzcode('underline')" unselectable="on">下划线</li>
+  <li id="e_cmd_strikethrough" onclick="discuzcode('strikethrough')" unselectable="on">删除线</li>
+  <li id="e_cmd_inserthorizontalrule" onclick="discuzcode('inserthorizontalrule')" unselectable="on">分隔线</li>
+  </ul>
+  </div><div class="popupmenu_popup fontname_menu" id="e_cmd_fontname_menu" style="display: none">
+  <ul unselectable="on"><li onclick="discuzcode('fontname', '仿宋_GB2312')" style="font-family: 仿宋_GB2312" unselectable="on">仿宋_GB2312</li><li onclick="discuzcode('fontname', '黑体')" style="font-family: 黑体" unselectable="on">黑体</li><li onclick="discuzcode('fontname', '楷体_GB2312')" style="font-family: 楷体_GB2312" unselectable="on">楷体_GB2312</li><li onclick="discuzcode('fontname', '宋体')" style="font-family: 宋体" unselectable="on">宋体</li><li onclick="discuzcode('fontname', '新宋体')" style="font-family: 新宋体" unselectable="on">新宋体</li><li onclick="discuzcode('fontname', '微软雅黑')" style="font-family: 微软雅黑" unselectable="on">微软雅黑</li><li onclick="discuzcode('fontname', 'Trebuchet MS')" style="font-family: Trebuchet MS" unselectable="on">Trebuchet MS</li><li onclick="discuzcode('fontname', 'Tahoma')" style="font-family: Tahoma" unselectable="on">Tahoma</li><li onclick="discuzcode('fontname', 'Arial')" style="font-family: Arial" unselectable="on">Arial</li><li onclick="discuzcode('fontname', 'Impact')" style="font-family: Impact" unselectable="on">Impact</li><li onclick="discuzcode('fontname', 'Verdana')" style="font-family: Verdana" unselectable="on">Verdana</li><li onclick="discuzcode('fontname', 'Times New Roman')" style="font-family: Times New Roman" unselectable="on">Times New Roman</li></ul>
+  </div><div class="popupmenu_popup fontsize_menu" id="e_cmd_fontsize_menu" style="display: none">
+  <ul unselectable="on"><li onclick="discuzcode('fontsize', 1)" unselectable="on"><font size="1" unselectable="on">1</font></li><li onclick="discuzcode('fontsize', 2)" unselectable="on"><font size="2" unselectable="on">2</font></li><li onclick="discuzcode('fontsize', 3)" unselectable="on"><font size="3" unselectable="on">3</font></li><li onclick="discuzcode('fontsize', 4)" unselectable="on"><font size="4" unselectable="on">4</font></li><li onclick="discuzcode('fontsize', 5)" unselectable="on"><font size="5" unselectable="on">5</font></li><li onclick="discuzcode('fontsize', 6)" unselectable="on"><font size="6" unselectable="on">6</font></li><li onclick="discuzcode('fontsize', 7)" unselectable="on"><font size="7" unselectable="on">7</font></li></ul>
+  </div>
+  
+  <div class="popupmenu_popup simple_menu" id="e_cmd_paragraph_menu" style="display: none">
+  <ul unselectable="on">
+  <li><a id="e_cmd_justifycenter" onclick="discuzcode('justifycenter')" unselectable="on">居中</a></li>
+  <li><a id="e_cmd_justifyleft" onclick="discuzcode('justifyleft')" unselectable="on">居左</a></li>
+  <li><a id="e_cmd_justifyright" onclick="discuzcode('justifyright')" unselectable="on">居右</a></li>
+  <li><a id="e_cmd_autotypeset" onclick="discuzcode('autotypeset')" unselectable="on">自动排版</a></li>
+  </ul>
+  </div>
+  
+  <div class="popupmenu_popup simple_menu" id="e_cmd_list_menu" style="display: none">
+  <ul unselectable="on">
+  <li id="e_cmd_insertorderedlist" onclick="discuzcode('insertorderedlist')" unselectable="on">排序的列表</li>
+  <li id="e_cmd_insertunorderedlist" onclick="discuzcode('insertunorderedlist')" unselectable="on">未排序列表</li>
+  </ul>
+  </div>
+  
+  </div><div class="popupmenu_popup uploadfile" id="e_cmd_image_menu" style="display: none" unselectable="on">
+  <div class="float_ctrl"><span><a href="javascript:;" class="float_close" onclick="hideMenu()">关闭</a></span></div>
+  <ul class="imguptype" id="e_cmd_image_ctrl">
+  <li><a href="javascript:;" hidefocus="true" class="current" id="e_btn_www" onclick="switchImagebutton('www');">网络图片</a></li>
+  <li><a href="javascript:;" hidefocus="true" id="e_btn_imgattachlist" onclick="switchImagebutton('imgattachlist');">图片列表</a></li>
+  <li><a href="javascript:;" hidefocus="true" id="e_btn_local" onclick="switchImagebutton('local');">普通上传</a></li><li><a href="javascript:;" hidefocus="true" id="e_btn_multi" onclick="switchImagebutton('multi');">批量上传</a></li></ul>
+  <div class="popupmenu_option" unselectable="on" id="e_www">
+  <table cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+  <th width="74%">请输入图片地址</th>
+  <th width="13%">宽(可选)</th>
+  <th width="13%">高(可选)</th>
+  </tr>
+  <tr>
+  <td><input type="text" id="e_cmd_image_param_1" style="width: 95%;" value="" class="txt" /></td>
+  <td><input id="e_cmd_image_param_2" size="5" value="" class="txt" /></td>
+  <td><input id="e_cmd_image_param_3" size="5" value="" class="txt" /></td>
+  </tr>
+  <tr>
+  <td colspan="3" align="center"><input type="button" id="e_cmd_image_submit" value="提交" /> &nbsp; <input onclick="hideMenu();" value="取消" type="button" /></td>
+  </tr>
+  </table>
+  </div>
+  <div class="popupmenu_option" unselectable="on" id="e_local" style="display: none;">
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tbody id="imgattachbodyhidden" style="display:none"><tr>
+  <td class="attachnum"><span id="imglocalno[]"><img src="https://c.4d4y.com/forum/images/attachicons/common_new.gif" /></span></td>
+  <td class="attachname">
+  <span id="imgdeschidden[]" style="display:none">
+  <span id="imglocalfile[]"></span>
+  </span>
+  <input type="hidden" name="imglocalid[]" />
+  </td>
+  <td class="attachdel"><span id="imgcpdel[]"></span></td>
+  </tr></tbody>
+  </table>
+  <div class="post_tablelist"><table cellpadding="0" cellspacing="0" summary="post_attachbody" border="0" width="100%"><tbody id="imgattachbody"></tbody></table></div>
+  <div class="uploadblock">
+  <div id="imgattachbtnhidden" style="display:none"><span><form name="imgattachform" id="imgattachform" method="post" action="misc.php?action=swfupload&amp;operation=upload&amp;simple=1&amp;type=image" target="attachframe" enctype="multipart/form-data"><input type="hidden" name="uid" value="576177"><input type="hidden" name="hash" value="68f2b52b00611e6e32058f95bb6b6c62"><input type="file" name="Filedata" size="45" class="filedata" /></form></span></div>
+  <div id="imgattachbtn"></div>
+  <p id="imguploadbtn"><input type="button" value="上传" onclick="uploadAttach(0, 0, 'img')" /> &nbsp; <input type="button" value="取消" onclick="hideMenu();" /></p>
+  <p id="imguploading" style="display: none;"><img src="https://c.4d4y.com/forum/images/default/uploading.gif" style="vertical-align: middle;" /> 上传中，请稍候，您可以<a href="javascript:;" onclick="hideMenu()">暂时关闭这个小窗口</a>，上传完成后您会收到通知。</p>
+  </div>
+  <div class="notice uploadinfo">
+  文件尺寸: <strong>小于 8MB </strong>&nbsp;
+  上传限制: <strong>98</strong> 个文件&nbsp;<strong>798.8MB</strong>&nbsp;<br />可用扩展名: <strong>jpg, jpeg, gif, png, bmp</strong>&nbsp;
+  </div>
+  </div>
+  <div class="popupmenu_option" unselectable="on" id="e_multi" style="display: none;">
+  <div class="floatboxswf" id="e_multiimg">
+  <script type="text/javascript">
+  $('e_multiimg').innerHTML = AC_FL_RunContent(
+  'width', '470', 'height', '268',
+  'src', 'images/common/upload.swf?site=https://www.4d4y.com/forum/misc.php%3Ftype=image&type=image',
+  'quality', 'high',
+  'id', 'swfupload',
+  'menu', 'false',
+  'allowScriptAccess', 'always',
+  'wmode', 'transparent'
+  );
+  </script>
+  </div>
+  <div class="notice uploadinfo">
+  文件尺寸: <strong>小于 8MB </strong>&nbsp;
+  上传限制: <strong>98</strong> 个文件&nbsp;<strong>798.8MB</strong>&nbsp;<br />可用扩展名: <strong>jpg, jpeg, gif, png, bmp</strong>&nbsp;
+  </div>
+  </div>
+  <div class="popupmenu_option" unselectable="on" id="e_imgattachlist" style="display: none;">
+  <div class="upfilelist">
+  <div id="imgattachlist">
+  <p class="notice">本帖还没有图片附件, <a href="javascript:;" onclick="switchImagebutton('multi');">点击这里</a>上传</p>
+  </div>
+  <div id="unusedimgattachlist">
+  </div>
+  </div>
+  <p class="notice" id="imgattach_notice" style="display: none">点击图片插入到帖子内容中</p>
+  </div>
+  </div>
+  
+  <div class="popupmenu_popup uploadfile" id="e_cmd_attach_menu" style="display: none" unselectable="on">
+  <div class="float_ctrl"><span><a href="javascript:;" class="float_close" onclick="hideMenu()">关闭</a></span></div>
+  <ul class="imguptype" id="e_cmd_attach_ctrl">
+  <li><a href="javascript:;" hidefocus="true" class="current" id="e_btn_attachlist" onclick="switchAttachbutton('attachlist');">附件列表</a></li>
+  <li><a href="javascript:;" hidefocus="true" id="e_btn_upload" onclick="switchAttachbutton('upload');">普通上传</a></li><li><a href="javascript:;" hidefocus="true" id="e_btn_swfupload" onclick="switchAttachbutton('swfupload');">批量上传</a></li></ul>
+  <div class="popupmenu_option" unselectable="on" id="e_upload" style="display: none;">
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tbody id="attachbodyhidden" style="display:none"><tr>
+  <td class="attachnum"><span id="localno[]"><img src="https://c.4d4y.com/forum/images/attachicons/common_new.gif" /></span></td>
+  <td class="attachname">
+  <span id="deschidden[]" style="display:none">
+  <span id="localfile[]"></span>
+  </span>
+  <input type="hidden" name="localid[]" />
+  </td>
+  <td class="attachdel"><span id="cpdel[]"></span></td>
+  </tr></tbody>
+  </table>
+  <div class="post_tablelist"><table cellpadding="0" cellspacing="0" summary="post_attachbody" border="0" width="100%"><tbody id="attachbody"></tbody></table></div>
+  <div class="uploadblock">
+  <div id="attachbtnhidden" style="display:none"><span><form name="attachform" id="attachform" method="post" action="misc.php?action=swfupload&amp;operation=upload&amp;simple=1" target="attachframe" enctype="multipart/form-data"><input type="hidden" name="uid" value="576177"><input type="hidden" name="hash" value="68f2b52b00611e6e32058f95bb6b6c62"><input type="file" name="Filedata" size="45" class="filedata" /></form></span></div>
+  <div id="attachbtn"></div>
+  <p id="uploadbtn"><input type="button" value="上传" onclick="uploadAttach(0, 0)" /> &nbsp; <input type="button" value="取消" onclick="hideMenu();" /></p>
+  <p id="uploading" style="display: none;"><img src="https://c.4d4y.com/forum/images/default/uploading.gif" style="vertical-align: middle;" /> 上传中，请稍候，您可以<a href="javascript:;" onclick="hideMenu()">暂时关闭这个小窗口</a>，上传完成后您会收到通知。</p>
+  </div>
+  <div class="notice uploadinfo">
+  文件尺寸: <strong>小于 8MB </strong>&nbsp;
+  上传限制: <strong>98</strong> 个文件&nbsp;<strong>798.8MB</strong>&nbsp;</div>
+  <iframe name="attachframe" id="attachframe" style="display: none;" onload="uploadNextAttach();"></iframe>
+  </div>
+  <div class="popupmenu_option" unselectable="on" id="e_swfupload" style="display: none;">
+  <div class="floatboxswf" id="e_multiattach">
+  <script type="text/javascript">
+  $('e_multiattach').innerHTML = AC_FL_RunContent(
+  'width', '470', 'height', '268',
+  'src', 'images/common/upload.swf?site=https://www.4d4y.com/forum/misc.php',
+  'quality', 'high',
+  'id', 'swfupload',
+  'menu', 'false',
+  'allowScriptAccess', 'always',
+  'wmode', 'transparent'
+  );
+  </script>
+  </div>
+  <div class="notice uploadinfo">
+  文件尺寸: <strong>小于 8MB </strong>&nbsp;
+  上传限制: <strong>98</strong> 个文件&nbsp;<strong>798.8MB</strong>&nbsp;</div>
+  </div>
+  <div class="popupmenu_option post_tablelist" unselectable="on" id="e_attachlist">
+  <table cellpadding="0" cellspacing="0" border="0" width="100%" id="attach_tblheader" style="display: none">
+  <tr>
+  <td class="attachnum"></td>
+  <td class="attachname">文件名</td>
+  <td class="attachdesc">描述</td>
+  <td class="attachdel"></td>
+  </tr>
+  </table>
+  <div class="upfilelist">
+  <div id="attachlist">
+  <p class="notice">本帖还没有附件, <a href="javascript:;" onclick="switchAttachbutton('swfupload');">点击这里</a>上传</p>
+  </div>
+  <div id="unusedattachlist">
+  </div>
+  </div>
+  <p class="notice" id="attach_notice" style="display: none">点击文件名插入到帖子内容中</p>
+  </div>
+  </div>
+  
+  <script src="https://c.4d4y.com/forum/forumdata/cache/smilies_var.js?vnB" type="text/javascript"></script>
+  <script type="text/javascript">smilies_show('smiliesdiv', 8, editorid + '_cmd_');</script>
+  <script type="text/javascript">
+  if(wysiwyg) {
+  newEditor(1, bbcode2html(textobj.value));
+  } else {
+  newEditor(0, textobj.value);
+  }
+  
+  var ATTACHNUM = {'imageused':0,'imageunused':0,'attachused':0,'attachunused':0};
+  function switchImagebutton(btn) {
+  var btns = ['www'];
+  btns.push('imgattachlist');
+  btns.push('local');btns.push('multi');switchButton(btn, btns);
+  }
+  ATTACHNUM['imageused'] = 0;
+  ATTACHNUM['imageunused'] = 0;
+  switchImagebutton('multi');
+  function switchAttachbutton(btn) {
+  var btns = ['attachlist'];
+  btns.push('upload');btns.push('swfupload');switchButton(btn, btns);
+  }
+  ATTACHNUM['attachused'] = 0;
+  ATTACHNUM['attachunused'] = 0;
+  switchAttachbutton('swfupload');
+  setCaretAtEnd();
+  if(BROWSER.ie >= 5 || BROWSER.firefox >= 2) {
+  _attachEvent(window, 'beforeunload', saveData);
+  }
+  </script></div>
+  
+  <script type="text/javascript">
+  
+  var postminchars = parseInt('5');
+  var postmaxchars = parseInt('100000');
+  var disablepostctrl = parseInt('0');
+  var seccodecheck = parseInt('');
+  var secqaacheck = parseInt('');
+  var typerequired = parseInt('1');
+  var special = parseInt('0');
+  var isfirstpost = 1;
+  var allowposttrade = parseInt('');
+  var allowpostreward = parseInt('');
+  var allowpostactivity = parseInt('');
+  var sortid = parseInt('');
+  var special = parseInt('0');
+  
+  simulateSelect('typeid');
+  addAttach();addAttach('img');
+  </script></div><div id="ad_footerbanner1"></div><div id="ad_footerbanner2"></div><div id="ad_footerbanner3"></div>
+  
+  <div id="footer">
+  <div class="wrap s_clear">
+  <div id="footlink">
+  <p>
+  <strong><a href="https://www.4d4y.com/" target="_blank">4D4Y</a></strong>
+  <span class="pipe">|</span><a href="mailto:nobody@4d4y.com">联系我们</a>
+  <span class="pipe">|</span><a href="stats.php">论坛统计</a></p>
+  <p class="smalltext">
+  GMT+8, 2025-2-1 16:25.
+  </p>
+  </div>
+  <div id="rightinfo">
+  <p>Powered by Discuz!</p>
+  <p></p>
+  
+  
+  
+  </div></div>
+  </div>
+  </body>
+  </html>
+  
+  
+
+2. for each images in the element defined as <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imageRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_below="@id/buttonLayout"
+        android:adjustViewBounds="true"
+        android:orientation="vertical"/> upload it to this URL: https://www.4d4y.com/forum/misc.php?action=swfupload&operation=upload&simple=1&type=image
+with following CURL spec:
+curl 'https://www.4d4y.com/forum/misc.php?action=swfupload&operation=upload&simple=1&type=image' \
+  -X 'POST' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+  -H 'accept-language: en-US,en;q=0.9,zh-CN;q=0.8,zh-TW;q=0.7,zh;q=0.6' \
+  -H 'cache-control: max-age=0' \
+  -H 'content-length: 972361' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundaryBEDdl64pxVslzAwa' \
+  -H 'cookie: smile=1D1; discuz_fastpostrefresh=0; cdb_sid=3Iytd4; cdb_cookietime=2592000; cdb_auth=d98ejOtF7NF%2FO7wb%2F%2FE2svOZKGpsDlFxkj51JV4xyXyY6WeGJotBdAHB4e3g3BckxmSf563PNXkjXM7%2FDLWhIO2p7Ef8; cdb_visitedfid=62D7D2' \
+  -H 'origin: https://www.4d4y.com' \
+  -H 'priority: u=0, i' \
+  -H 'referer: https://www.4d4y.com/forum/post.php?action=newthread&fid=62' \
+  -H 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Microsoft Edge";v="132"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: iframe' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0'
+
+ and extract the image ID from the response like 5871711, 5871948, 5871960 from below sample responses: 
+DISCUZUPLOAD|0|5871711|1
+DISCUZUPLOAD|0|5871948|1
+DISCUZUPLOAD|0|5871960|1 (may call below url again to get the mappings)
+
+3. Then visit the page https://www.4d4y.com/forum/ajax.php?action=imagelist&pid=NaN&posttime=1738368633&inajax=1&ajaxtarget=imgattachlist by replacing posttime retrieved from our first step
+retrieve the real server image URL related to previous images ids like 1000001139 for "attachments/swfupload/2502011626381c99b7126d378c.png" for all the uploaded images
+<?xml version="1.0" encoding="gbk"?><root><![CDATA[<table cellspacing="2" cellpadding="2" class="imglist"><tr><td valign="bottom" id="image_td_5871947" width="25%">
+    <a href="javascript:;" title="1000001138.png"><img src="attachments/swfupload/25020116266e4a1431b5b2e2dc.png" id="image_5871947" onclick="insertAttachimgTag('5871947')" width="110" _width="110" _height="110" onload="thumbImg(this, 1)" /></a>
+    <p class="imginfo">
+    <span class="right"><a href="javascript:;" onclick="delImgAttach(5871947,1)" class="deloption">删除</a></span>
+    <input type="text" class="txt lighttxt" value="描述" onclick="this.style.display='none';$('image_desc_5871947').style.display='';$('image_desc_5871947').focus();" />
+    <input type="text" name="attachnew[5871947][description]" class="txt" style="display: none" id="image_desc_5871947" />
+    </p>
+    </td>
+    <td valign="bottom" id="image_td_5871948" width="25%">
+    <a href="javascript:;" title="1000001139.png"><img src="attachments/swfupload/2502011626381c99b7126d378c.png" id="image_5871948" onclick="insertAttachimgTag('5871948')" width="110" _width="110" _height="110" onload="thumbImg(this, 1)" /></a>
+    <p class="imginfo">
+    <span class="right"><a href="javascript:;" onclick="delImgAttach(5871948,1)" class="deloption">删除</a></span>
+    <input type="text" class="txt lighttxt" value="描述" onclick="this.style.display='none';$('image_desc_5871948').style.display='';$('image_desc_5871948').focus();" />
+    <input type="text" name="attachnew[5871948][description]" class="txt" style="display: none" id="image_desc_5871948" />
+    </p>
+    </td>
+    <td valign="bottom" id="image_td_5871960" width="25%">
+    <a href="javascript:;" title="J-36.jpg"><img src="attachments/swfupload/2502011652f95915694dcac4ca.jpg" id="image_5871960" onclick="insertAttachimgTag('5871960')" width="110" _width="110" _height="110" onload="thumbImg(this, 1)" /></a>
+    <p class="imginfo">
+    <span class="right"><a href="javascript:;" onclick="delImgAttach(5871960,1)" class="deloption">删除</a></span>
+    <input type="text" class="txt lighttxt" value="描述" onclick="this.style.display='none';$('image_desc_5871960').style.display='';$('image_desc_5871960').focus();" />
+    <input type="text" name="attachnew[5871960][description]" class="txt" style="display: none" id="image_desc_5871960" />
+    </p>
+    </td>
+    <td width="25%"></td></tr></table>
+    <script type="text/javascript" reload="1">
+    ATTACHNUM['imageunused'] += 3;
+    updateattachnum('image');
+    </script>
+    ]]></root>
+
+4. Submit the new post using below curl spec, 
+
+curl 'https://www.4d4y.com/forum/post.php?action=newthread&fid=62&extra=&topicsubmit=yes' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+  -H 'accept-language: en-US,en;q=0.9,zh-CN;q=0.8,zh-TW;q=0.7,zh;q=0.6' \
+  -H 'cache-control: max-age=0' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -H 'cookie: smile=1D1; discuz_fastpostrefresh=0; cdb_cookietime=2592000; cdb_auth=d98ejOtF7NF%2FO7wb%2F%2FE2svOZKGpsDlFxkj51JV4xyXyY6WeGJotBdAHB4e3g3BckxmSf563PNXkjXM7%2FDLWhIO2p7Ef8; cdb_visitedfid=62D2D7; cdb_fid62=1738397924; cdb_oldtopics=D3284576D3354299D3354298D3354294D; cdb_sid=b0Dgx0' \
+  -H 'origin: https://www.4d4y.com' \
+  -H 'priority: u=0, i' \
+  -H 'referer: https://www.4d4y.com/forum/post.php?action=newthread&fid=62' \
+  -H 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Microsoft Edge";v="132"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: document' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0' \
+  --data-raw 'formhash=58734250&posttime=1738398319&wysiwyg=1&iconid=&subject=test+new+client&typeid=7&message=%B5%DA%D2%BB%D5%C5%CD%BC%C6%AC%5Battachimg%5D5871960%5B%2Fattachimg%5D%0D%0A%B5%DA%B6%FE%D5%C5%CD%BC%C6%AC%0D%0A%5Battachimg%5D5871948%5B%2Fattachimg%5D%0D%0A%0D%0A%B5%DA%C8%FD%D0%D0%0D%0A%0D%0A%5Battachimg%5D5871947%5B%2Fattachimg%5D&tags=&attention_add=1&attachnew%5B5871947%5D%5Bdescription%5D=&attachnew%5B5871948%5D%5Bdescription%5D=&attachnew%5B5871960%5D%5Bdescription%5D='
+
+formhash: 58734250
+posttime: 1738398319
+wysiwyg: 1
+iconid: 
+subject: test+new+client
+typeid: 7
+message: %B5%DA%D2%BB%D5%C5%CD%BC%C6%AC%5Battachimg%5D5871960%5B%2Fattachimg%5D%0D%0A%B5%DA%B6%FE%D5%C5%CD%BC%C6%AC%0D%0A%5Battachimg%5D5871948%5B%2Fattachimg%5D%0D%0A%0D%0A%B5%DA%C8%FD%D0%D0%0D%0A%0D%0A%5Battachimg%5D5871947%5B%2Fattachimg%5D
+tags: 
+attention_add: 1
+attachnew%5B5871947%5D%5Bdescription%5D: 
+attachnew%5B5871948%5D%5Bdescription%5D: 
+attachnew%5B5871960%5D%5Bdescription%5D: 
+
+there message should be messagebody plus <attachimg>image id</attachimg> for each image

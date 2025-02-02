@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var textViewContent: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var editTextSubject: EditText
     private lateinit var editTextBody: EditText
     private lateinit var buttonSubmit: Button
@@ -61,6 +63,8 @@ class MainActivity : AppCompatActivity() {
         textViewContent = findViewById(R.id.textViewContent)
         this.textColor = ContextCompat.getColor(this, R.color.textColor)
         progressBar = findViewById(R.id.progressBar)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+
 //        editTextSubject = findViewById(R.id.editTextSubject)
 //        editTextBody = findViewById(R.id.editTextBody)
 //        buttonSubmit = findViewById(R.id.buttonSubmit)
@@ -98,6 +102,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            currentPage = 1
+            loadPage(1)
+            swipeRefreshLayout.isRefreshing = false
+        }
+
     }
 
     private fun redirectToLogin() {
@@ -118,90 +129,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun submitNewThread(subject: String, body: String) {
-//        // Encode parameters using GBK
-//        val subjectEncoded = URLEncoder.encode(subject, "GBK")
-//        val messageEncoded = URLEncoder.encode(body, "GBK")
-//
-//        // Manually build form data with proper encoding
-//        val formData = "formhash=$formHash" +
-//                "&posttime=1738155158" +
-//                "&wysiwyg=1" +
-//                "&iconid=" +
-//                "&subject=$subjectEncoded" +
-//                "&typeid=56" +
-//                "&message=$messageEncoded" +
-//                "&tags=" +
-//                "&attention_add=1"
-//
-//        val requestBody = formData.toRequestBody("application/x-www-form-urlencoded".toMediaType())
-//
-//        val request = Request.Builder()
-//            .url("https://www.4d4y.com/forum/post.php?action=newthread&fid=2&extra=&topicsubmit=yes")
-//            .addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-//            .addHeader("accept-language", "en-US,en;q=0.9,zh-CN;q=0.8,zh-TW;q=0.7,zh;q=0.6")
-//            .addHeader("cache-control", "max-age=0")
-//            .addHeader("content-type", "application/x-www-form-urlencoded")
-//            .addHeader("cookie", myCookie ?: "")
-//            .addHeader("origin", "https://www.4d4y.com")
-//            .addHeader("priority", "u=0, i")
-//            .addHeader("referer", "https://www.4d4y.com/forum/post.php?action=newthread&fid=62")
-//            .addHeader("sec-ch-ua", "\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Microsoft Edge\";v=\"132\"")
-//            .addHeader("sec-ch-ua-mobile", "?0")
-//            .addHeader("sec-ch-ua-platform", "\"macOS\"")
-//            .addHeader("sec-fetch-dest", "document")
-//            .addHeader("sec-fetch-mode", "navigate")
-//            .addHeader("sec-fetch-site", "same-origin")
-//            .addHeader("sec-fetch-user", "?1")
-//            .addHeader("upgrade-insecure-requests", "1")
-//            .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0")
-//            .post(requestBody)
-//            .build()
-//
-//        client.newCall(request).enqueue(object : Callback {
-//            override fun onFailure(call: Call, e: IOException) {
-//                runOnUiThread {
-//                    progressBar.visibility = View.GONE
-//                    Toast.makeText(this@MainActivity, "提交失败: ${e.message}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onResponse(call: Call, response: Response) {
-//                runOnUiThread { progressBar.visibility = View.GONE }
-//
-//                if (response.isSuccessful) {
-////                    val responseHtml = response.body?.string()
-//                    if (response.request.url.toString().contains("https://www.4d4y.com/forum/viewthread.php?tid=")) {
-////                    if (responseHtml?.contains("您的帖子已成功提交") == true) {
-//                        runOnUiThread {
-//                            Toast.makeText(this@MainActivity, "发帖成功!", Toast.LENGTH_SHORT).show()
-//                            editTextSubject.text.clear()
-//                            editTextBody.text.clear()
-//                            hideKeyboard()
-//                            currentPage = 1
-//                            textViewContent.text = SpannableStringBuilder()
-//                            loadPage(currentPage)
-//                        }
-//                    } else {
-//                        runOnUiThread {
-//                            Toast.makeText(this@MainActivity, "发帖失败，请检查内容", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                } else {
-//                    runOnUiThread {
-//                        Toast.makeText(this@MainActivity, "服务器错误: ${response.code}", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }
-//        })
-//    }
-
-//    private fun extractHiddenFormFields(html: String): Map<String, String> {
-//        val regex = Regex("<input type=\"hidden\" name=\"([^\"]+)\" value=\"([^\"]*)\"")
-//        return regex.findAll(html).associate { it.groupValues[1] to it.groupValues[2] }
-//    }
-
     private fun loadPage(page: Int) {
+        if (page == 1) {
+            textViewContent.text = ""
+        }
         progressBar.visibility = View.VISIBLE
 
         val urlToFetch = "https://www.4d4y.com/forum/forumdisplay.php?fid=2&page=" + page.toString()
