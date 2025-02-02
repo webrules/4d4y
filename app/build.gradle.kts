@@ -71,4 +71,5 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("org.jsoup:jsoup:1.17.2")
 }
