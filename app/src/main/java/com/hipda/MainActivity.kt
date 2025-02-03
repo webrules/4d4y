@@ -37,6 +37,11 @@ import okhttp3.Response
 import java.io.IOException
 import java.net.URLEncoder
 import java.util.regex.Pattern
+import android.text.style.StyleSpan
+import android.text.style.RelativeSizeSpan
+import android.graphics.Typeface
+import android.text.style.SuperscriptSpan
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -241,23 +246,24 @@ class MainActivity : AppCompatActivity() {
         val matches = regex.findAll(html)
         val spannableStringBuilder = SpannableStringBuilder()
 
+        // In the extractLinks function, modify the matches.forEach block:
         matches.forEach { matchResult ->
             val tid = matchResult.groupValues[1]
             val text = matchResult.groupValues[2]
             val author = matchResult.groupValues[3]
-
-            val line = "$text\n\n"
-//            val line = "$text [$author]\n\n"
+    
+            val line = "$text $author\n\n"
             val spannableLine = SpannableString(line)
-
+    
+            // Add clickable span for the main text
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(view: View) {
                     startThreadActivity(tid, text)
                 }
-
+    
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
-                    ds.isUnderlineText = false // Adds an underline for visibility
+                    ds.isUnderlineText = false
                     val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
                     if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
                         ds.color = textColor
@@ -266,8 +272,18 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+    
+            // Calculate positions
+            val textEnd = text.length
+            val authorStart = line.lastIndexOf(author)
+            val authorEnd = authorStart + author.length
+    
+            // Add spans
+            spannableLine.setSpan(clickableSpan, 0, textEnd, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannableLine.setSpan(StyleSpan(Typeface.ITALIC), authorStart, authorEnd, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannableLine.setSpan(RelativeSizeSpan(0.8f), authorStart, authorEnd, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            spannableLine.setSpan(SuperscriptSpan(), authorStart, authorEnd, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-            spannableLine.setSpan(clickableSpan, 0, line.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
             spannableStringBuilder.append(spannableLine)
         }
 

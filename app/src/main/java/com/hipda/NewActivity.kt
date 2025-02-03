@@ -58,7 +58,7 @@ class NewActivity : AppCompatActivity() {
     private var myCookie: String = ""
     private var formHash: String = "58734250"
     private var textColor = 1
-    private var devMode = false
+    private var devMode = true
     private lateinit var imageRecyclerView: RecyclerView
     private lateinit var imageAdapter: ImageAdapter
     private val PICK_IMAGE_REQUEST = 1001

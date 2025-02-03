@@ -1,8 +1,13 @@
 package com.hipda
 
+import android.content.Intent
+import android.net.Uri
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
@@ -143,7 +148,7 @@ class ThreadActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.refresh -> {
                 container.removeAllViews()
-                loadPage(currentPage)
+                loadPage(1)
                 true
             }
 
@@ -277,7 +282,6 @@ class ThreadActivity : AppCompatActivity() {
     }
 
     private fun formatPosts(posts: List<Post>) {
-
         posts.forEach { post ->
             val authorView = TextView(this).apply {
                 text = post.author
@@ -290,11 +294,31 @@ class ThreadActivity : AppCompatActivity() {
                 authorView.setBackgroundColor(Color.BLACK)
             }
             container.addView(authorView)
-
+            
+            // In the formatPosts function, update the contentView setup:
             val contentView = TextView(this).apply {
-                text = HtmlCompat.fromHtml(post.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                val spannedText = HtmlCompat.fromHtml(post.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                val strBuilder = SpannableStringBuilder(spannedText)
+                val urls = strBuilder.getSpans(0, strBuilder.length, URLSpan::class.java)
+                
+                urls.forEach { span ->
+                    val start = strBuilder.getSpanStart(span)
+                    val end = strBuilder.getSpanEnd(span)
+                    val url = span.url
+                    
+                    strBuilder.removeSpan(span)
+                    strBuilder.setSpan(object : URLSpan(url) {
+                        override fun onClick(widget: View) {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            startActivity(intent)
+                        }
+                    }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+                
+                text = strBuilder
                 textSize = 18f
                 setPadding(0, 8, 0, 16)
+                movementMethod = LinkMovementMethod.getInstance()
             }
             if (isNightMode) {
                 contentView.setTextColor(Color.WHITE)
@@ -318,10 +342,20 @@ class ThreadActivity : AppCompatActivity() {
         }
     }
 
+//    private fun loadImage(imageUrl: String, imageView: ImageView) {
+//        Glide.with(this)
+//            .load(imageUrl)
+//            .into(imageView)
+//    }
     private fun loadImage(imageUrl: String, imageView: ImageView) {
-        Glide.with(this)
+        val glideRequest = Glide.with(this)
             .load(imageUrl)
-            .into(imageView)
+
+        if (isNightMode) {
+            glideRequest.transform(ColorInversionTransformation())
+        }
+
+        glideRequest.into(imageView)
     }
 
     @SuppressLint("ServiceCast")
@@ -391,8 +425,12 @@ class ThreadActivity : AppCompatActivity() {
                         ).show()
                         hideKeyboard()
                         container.removeAllViews()
-//                        currentPage = 1
-                        loadPage(currentPage)
+                        loadPage(10000)  // Load the last page
+                        
+                        // Scroll to bottom after content is loaded
+                        scrollView.postDelayed({
+                            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+                        }, 1000)  // Add a delay to ensure content is loaded
                     }
                 } else {
                     runOnUiThread {
