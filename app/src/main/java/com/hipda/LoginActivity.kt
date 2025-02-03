@@ -1,5 +1,8 @@
 package com.hipda
 
+ import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -37,6 +40,37 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
+        val savedCookies = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+            .getString("COOKIE", null)
+
+        if (!savedCookies.isNullOrEmpty()) {
+            redirectToMain()
+            return
+
+//            // Extract expiration date from cookies
+//            val expiresPattern = "expires=([^;]+)".toRegex()
+//            val matchResult = expiresPattern.find(savedCookies)
+//
+//            matchResult?.let { match ->
+//                val expiresStr = match.groupValues[1]
+//                val dateFormat = SimpleDateFormat("EEE, dd-MMM-yyyy HH:mm:ss z", Locale.US)
+//                dateFormat.timeZone = TimeZone.getTimeZone("GMT")
+//
+//                try {
+//                    val expiresDate = dateFormat.parse(expiresStr)
+//                    val currentDate = System.currentTimeMillis()
+//
+//                    if (expiresDate != null && expiresDate.time > currentDate) {
+//                        // Cookie is still valid
+//                        redirectToMain()
+//                        return
+//                    }
+//                } catch (e: Exception) {
+//                    // If date parsing fails, continue to login screen
+//                }
+//            }
+        }
 
         setContentView(R.layout.activity_login)
         setTitle("来自D版带着爱")

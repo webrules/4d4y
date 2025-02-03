@@ -16,7 +16,7 @@ class ColorInversionTransformation : BitmapTransformation() {
         val canvas = Canvas(output)
         
         // Check if image has predominantly white background
-        if (isPredominantlyWhite(toTransform)) {
+        //if (isPredominantlyWhite(toTransform)) {
             val paint = Paint()
             val colorMatrix = ColorMatrix(floatArrayOf(
                 -1f, 0f, 0f, 0f, 255f,
@@ -26,9 +26,9 @@ class ColorInversionTransformation : BitmapTransformation() {
             ))
             paint.colorFilter = ColorMatrixColorFilter(colorMatrix)
             canvas.drawBitmap(toTransform, 0f, 0f, paint)
-        } else {
-            canvas.drawBitmap(toTransform, 0f, 0f, null)
-        }
+//        } else {
+//            canvas.drawBitmap(toTransform, 0f, 0f, null)
+//        }
         
         return output
     }

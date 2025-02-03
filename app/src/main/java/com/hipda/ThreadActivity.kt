@@ -58,6 +58,7 @@ class ThreadActivity : AppCompatActivity() {
     private var formHash: String? = "58734250"
     private var fid: String? = "2"
     private var isNightMode = false
+    private var isReading = false
 
     private data class Post(
         val author: String,
@@ -167,6 +168,10 @@ class ThreadActivity : AppCompatActivity() {
 
 
     private fun loadPage(page: Int) {
+        // to avoid the network async called issue at runOnUiThread
+        if (isReading) return
+        isReading = true
+
         threadProgressBar.visibility = View.VISIBLE
         val urlToFetch =
             "https://www.4d4y.com/forum/viewthread.php?tid=$threadId&extra=page%3D1&page=$page"
@@ -212,7 +217,8 @@ class ThreadActivity : AppCompatActivity() {
                         runOnUiThread {
                             formatPosts(posts)
                             hasNextPage = content.contains("class=\"next\"")
-                            currentPage++
+                            if (hasNextPage) currentPage++
+                            isReading = false
                         }
                     }
                 }
@@ -269,9 +275,8 @@ class ThreadActivity : AppCompatActivity() {
             val imageUrls = imageRegex.findAll(content)
                 .map { it.groupValues[1] }
                 .filterNot { url ->
-                    url.contains("default/attachimg.gif") || url.contains("smilies/") || url.contains(
-                        "common/back.gif"
-                    )
+                    url.contains("default/attachimg.gif") || url.contains("smilies/") ||
+                            url.contains("common/back.gif") || url.contains("images/attachicons/")
                 }
                 .toList()
 
