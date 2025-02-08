@@ -172,6 +172,11 @@ class MainActivity : AppCompatActivity() {
                     val content = response.body?.string()
                     if (content != null) {
                         if (content.contains("您还未登录")) {
+                            // Clear cookies before redirecting
+                            getSharedPreferences("AppPreferences", MODE_PRIVATE)
+                                .edit()
+                                .remove("COOKIE")
+                                .apply()
                             redirectToLogin()
                         }
                         else {
